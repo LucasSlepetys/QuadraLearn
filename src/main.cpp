@@ -2,6 +2,7 @@
 #include "Locomotion/locomotion.h"
 #include "Configuration/robot_model.h"
 #include "Configuration/chosen_configurations.h"
+#include "SimulationExport/simulation_export.h"
 
 const double radians_to_degrees = 180.0 / 3.141592653589793; //Display only
 
@@ -26,6 +27,14 @@ int main(void)
         &ik_config
     );
 
+    //Record the initial state at t = 0; VS Code saves this in the project folder
+    FILE *simulation_file = simulation_export_open("simulation.csv");
+    if (simulation_file == NULL) {
+        perror("Could not create simulation.csv");
+        return 1;
+    }
+    simulation_export_write(simulation_file, &state, foot_config.ground_z_W_m, &transform_config, &ik_config);
+
     //Check the front-right footprints before the update loop
     printf("Initial FR footprints at t = %.3f s\n", state.time_s);
     printf("Contact:     (%.9f, %.9f, %.9f) m\n",
@@ -40,6 +49,15 @@ int main(void)
         transform_config = make_coordinate_transform_config(&command);
 
         locomotion_update(&state, command.forward_velocity_m_s, command.yaw_rate_rad_s, dt_s, &gait, &foot_config, swing_height_m, &transform_config, &ik_config);
+
+        //Append this instant: body pose, leg states, targets, angles and FK points
+        simulation_export_write(simulation_file, &state, foot_config.ground_z_W_m, &transform_config, &ik_config);
+    }
+
+    //Finish the CSV recording before displaying the usual results
+    if (simulation_export_close(simulation_file) != 0) {
+        fprintf(stderr, "Could not finish writing simulation.csv\n");
+        return 1;
     }
 
     printf("Time:   %.3f s\n", state.time_s);

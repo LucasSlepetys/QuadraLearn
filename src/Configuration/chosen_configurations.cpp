@@ -3,15 +3,15 @@
 
 //Test commands for now; later these values can arrive from an upstream module
 const MotionCommand initial_command = {
-    0.10,  //Forward velocity [m/s]
-    0.2,   //Yaw rate [rad/s]
-    0.110, //Body-origin height above ground [m]
+    0.1,  //Forward velocity [m/s]
+    0.44,   //Yaw rate [rad/s]
+    0.145, //Body-origin height above ground [m]
     0.0,   //Body roll [rad]
     0.0    //Body pitch [rad]
 };
 
 //Chosen gait settings
-const double gait_period_s = 0.8;
+const double gait_period_s = 0.5;
 const double stance_fraction = 0.5;
 const GaitConfig gait = {
     gait_period_s,
@@ -23,12 +23,12 @@ const double swing_height_m = 0.02; //Maximum ball-bottom clearance [m]
 
 //Nominal foot placement relative to each hip reference in the level G layout
 const double x_0_m = 0.0;  //Positive forwards, negative backwards [m]
-const double y_0_m = 0.06; //Positive outwards, negative inwards [m]; not a CAD link offset
+const double y_0_m = 0.0; //Positive outwards, negative inwards [m]; not a CAD link offset
 const double ground_z_W_m = 0.0;
 
 //Desktop simulation settings; these do not command a travelled distance
 const double dt_s = 0.02;
-const int simulation_updates = 50;
+const int simulation_updates = 500; //50 = 1 sec fpr dt_s = 0.02
 const BodyPose2D initial_body_pose = {0.0, 0.0, 0.0}; //World x, y and yaw; separate from x_0/y_0
 
 FootPlacementConfig make_foot_placement_config(
