@@ -5,8 +5,8 @@
 const MotionCommand initial_command = {
     0.01,  //Forward velocity [m/s]
     0.4,   //Yaw rate [rad/s]
-    0.130, //Target body height after the grounded adjustment [m]
-    0.0,   //Body roll [rad]
+    0.145, //Target body height after the grounded adjustment [m]
+    0.00295740232396, //Body roll [rad]: +0.16945 deg makes all CAD-home feet coplanar
     0.0    //Body pitch [rad]
 };
 
@@ -29,23 +29,23 @@ const double ground_z_W_m = 0.0;
 //Desktop simulation settings; these do not command a travelled distance
 const double dt_s = 0.02;
 const int simulation_updates = 1000; //20 seconds: stand, adjust height, start, walk, stop, hold
-const double standing_delay_s = 1.0; //Hold the initial pose before adjusting height [real s]
+const double standing_delay_s = 1; //Hold the initial pose before adjusting height [real s]
 const double height_adjustment_duration_s = 2.0; //T_H: lower/raise with four feet grounded [real s]
-const double start_ramp_duration_s = 5.0; //T_a: gradual acceleration duration [real s]
+const double start_ramp_duration_s = 3; //T_a: gradual acceleration duration [real s]
 const double stop_request_time_s = 17.0; //Desktop STOP at this real time [s]
 const double minimum_stop_duration_s = 1.0; //T_min; actual ramp ends at a landing [real s]
 const BodyPose2D initial_body_pose = {0.0, 0.0, 0.0}; //World x, y and yaw; separate from x_0/y_0
 
-//Choose the standing pose here, independently of the walking offsets x_0/y_0.
-//Edit model angles in degrees below; conversion stores radians, not servo angles.
-//These straighter starting legs give H0 = 0.160 m, with feet below the hip-roll origins.
+//Desktop starting inputs: all four legs at CAD home; later supply measured model angles.
+//Edit degrees below; stored values are radians, not physical servo angles.
+//At the small body roll above, FK recovers H0 = 0.081196102 m with four feet grounded.
 const double degrees_to_radians = 3.141592653589793 / 180.0;
 const LegJointAngles initial_joint_angles[4] = {
     // alpha (hip roll),                 theta_1 (hip pitch),              theta_2 (relative knee)
-    {-19.585306273817 * degrees_to_radians, -12.175145474491 * degrees_to_radians, 50.198667937602 * degrees_to_radians}, //FL
-    { 18.937333276919 * degrees_to_radians, -11.764103850663 * degrees_to_radians, 49.158672762324 * degrees_to_radians}, //FR
-    {-19.585306273817 * degrees_to_radians, -12.175145474491 * degrees_to_radians, 50.198667937602 * degrees_to_radians}, //RL
-    { 18.937333276919 * degrees_to_radians, -11.764103850663 * degrees_to_radians, 49.158672762324 * degrees_to_radians}  //RR
+    {-30.0 * degrees_to_radians, -104.5669876439 * degrees_to_radians, 134.1685941347 * degrees_to_radians}, //FL
+    { 30.0 * degrees_to_radians, -104.5669876439 * degrees_to_radians, 134.1685943331 * degrees_to_radians}, //FR
+    {-30.0 * degrees_to_radians, -104.5669876439 * degrees_to_radians, 134.1685941347 * degrees_to_radians}, //RL
+    { 30.0 * degrees_to_radians, -104.5669876439 * degrees_to_radians, 134.1685943331 * degrees_to_radians}  //RR
 };
 
 FootPlacementConfig make_foot_placement_config(

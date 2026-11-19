@@ -1,0 +1,10 @@
+Desktop test reference for Servo_Calibration.xlsx
+Imported: 2026-11-19
+Source SHA256: b9b04e2d3cf7249674c8f901d427b183a74989c49ffb48c5d747c7613a8308a0
+Sheets S01-S12, A3:C21. All 228 rows and 684 numeric cells were preserved.
+CSV columns: servo ID, original spreadsheet row, angle [deg], feedback [V], duty [percent].
+The user confirmed 50 Hz; frequency is not recorded in the workbook.
+The CSV was read directly from XLSX numeric cells, independently of the production C arrays.
+Keep this reference fixed when editing code: a changed value should fail its source check.
+For new measurements, deliberately update both the production data and this source reference.
+These files are used only by desktop tests, never by the firmware.

@@ -14,7 +14,7 @@ const double robot_hip_position_B_m[4][3] = {
 //IK offsets are expressed in the unrolled leg frame M
 const InverseKinematicsConfig ik_config = {
     0.07581339370413468, //L1: projected upper-link length [m]
-    0.06126627717210414, //L2: projected lower-link length [m]
+    0.0615914012677,     //L2: projected lower link [m], Fusion inspection 2026-11-19
     { //Hip roll to hip pitch: {d_x, d_y, d_z} [m]
         {-0.02175,  0.0185, -0.0100}, //FL
         {-0.02175, -0.0175, -0.0100}, //FR

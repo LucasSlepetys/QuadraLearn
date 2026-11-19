@@ -24,6 +24,27 @@
                 "panel": "dedicated",
                 "clear": true
             }
+        },
+        {
+            "label": "Build and run ServoCalibration test",
+            "type": "process",
+            "command": "${env:WINDIR}\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+            "args": [
+                "-NoLogo",
+                "-NoProfile",
+                "-File",
+                "${workspaceFolder}\\build_and_run_servo_tests.ps1"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "group": "test",
+            "problemMatcher": "$gcc",
+            "presentation": {
+                "reveal": "always",
+                "panel": "dedicated",
+                "clear": true
+            }
         }
     ]
 }

@@ -39,3 +39,7 @@ if ($LASTEXITCODE -ne 0) {
 
 & $lessonExecutable
 exit $LASTEXITCODE
+
+# Press Ctrl + Shift + P.
+# Search for Tasks: Run Task and select it.
+# Select Build and run ServoCalibration test.
